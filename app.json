@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "learningRequestValidation",
+    "slug": "learningRequestValidation",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
