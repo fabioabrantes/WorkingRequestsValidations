@@ -91,88 +91,87 @@ export function ValidationManual() {
 
       Alert.alert(
         'cadastro realizado com sucesso', 
-        `${data.email}${data.name} ${data.cpf}`,
+        `${data.email} ${data.name} ${data.cpf}`,
         [{text:'ok'}]);
     }
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView 
-        style={{ flex: 1 }} 
-        behavior={Platform.OS === "ios" ? "padding" : "height"} 
-        enabled
-      >
-          <Container>
-            <StatusBar
-              barStyle="dark-content"
-              backgroundColor="transparent"
-              translucent
-            />
-
-            <Header>
-              <SubTitle>
-                Faça seu Cadastro no sistema do IFPB.
-              </SubTitle>
-            </Header>
-
-            <Form>
-            <InputCustom 
-                iconName="edit"
-                placeholder="Digite seu nome"
-                autoCorrect={false}/* não fica corrigindo palavras */
-                autoCapitalize="none" /* não fica induzindo a colocar a primeira letra maiúscula */
-                onChangeText={handleName}
-                value={name}
+    <Container>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView 
+          behavior="position" 
+          enabled
+        >
+              <StatusBar
+                barStyle="dark-content"
+                backgroundColor="transparent"
+                translucent
               />
-              {
-                errorName.length > 0 && <ErrorInput description={errorName}/>
-              }
 
+              <Header>
+                <SubTitle>
+                  Faça seu Cadastro no sistema do IFPB.
+                </SubTitle>
+              </Header>
+
+              <Form>
               <InputCustom 
-                iconName="mail"
-                placeholder="Digite seu E-mail"
-                keyboardType="email-address"
-                autoCorrect={false}
-                autoCapitalize="none" 
-                onChangeText={handleEmail}
-                value={email}
-              />
-              {
-                errorEmail.length > 0 && <ErrorInput description={errorEmail}/>
-              }
+                  iconName="edit"
+                  placeholder="Digite seu nome"
+                  autoCorrect={false}/* não fica corrigindo palavras */
+                  autoCapitalize="none" /* não fica induzindo a colocar a primeira letra maiúscula */
+                  onChangeText={(text)=>handleName(text)}
+                  value={name}
+                />
+                {
+                  errorName.length > 0 && <ErrorInput description={errorName}/>
+                }
 
-              <InputCustom 
-                iconName="lock"
-                placeholder="Digite sua Senha"
-                onChangeText={handlePassword}
-                value={password}
-              />
-              {
-                errorPassword.length > 0 && <ErrorInput description={errorPassword}/>
-              }
+                <InputCustom 
+                  iconName="mail"
+                  placeholder="Digite seu E-mail"
+                  keyboardType="email-address"
+                  autoCorrect={false}
+                  autoCapitalize="none" 
+                  onChangeText={handleEmail}
+                  value={email}
+                />
+                {
+                  errorEmail.length > 0 && <ErrorInput description={errorEmail}/>
+                }
 
-              <InputMask
-                mask='cpf' 
-                iconName="edit"
-                placeholder="Digite seu CPF"
-                inputMaskChange={handleCpf}
-                value={cpf}
-              />
-              {
-                errorCpf.length > 0 && <ErrorInput description={errorCpf}/>
-              }
-            </Form>
+                <InputCustom 
+                  iconName="lock"
+                  placeholder="Digite sua Senha"
+                  onChangeText={handlePassword}
+                  value={password}
+                />
+                {
+                  errorPassword.length > 0 && <ErrorInput description={errorPassword}/>
+                }
 
-            <Footer>
-              <ButtonCustom
-                title="Cadastrar"
-                onPress={salvar}
-                loading={false}
-              />
-            </Footer>
-          </Container>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+                <InputMask
+                  mask='cpf' 
+                  iconName="edit"
+                  placeholder="Digite seu CPF"
+                  inputMaskChange={handleCpf}
+                  value={cpf}
+                />
+                {
+                  errorCpf.length > 0 && <ErrorInput description={errorCpf}/>
+                }
+              </Form>
+
+              <Footer>
+                <ButtonCustom
+                  title="Cadastrar"
+                  onPress={salvar}
+                  loading={false}
+                />
+              </Footer>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </Container>
   );
 }

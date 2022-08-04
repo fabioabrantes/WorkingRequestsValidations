@@ -22,106 +22,119 @@ import {
   Title,
   SubTitle,
   Form,
-  Footer,
+  Footer
 } from './styles';
 
 import {useTheme} from 'styled-components';
 
-interface IResponse{
-  status: string;
+interface IData{
+  avatar:string;
+  titulo:string;
 }
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorValidator, setErrorValidator] = useState('');
+  const [message, setMessage] = useState('');
 
   const theme = useTheme();
 
   function validaCampos(){
-    let message = '';
+    let error = false;
     if(!validateEmail(email) || !validatePassword(password) ){
-      message = "Preencha seu email ou Password corretamente";
+     let message = "Preencha seu email ou Password corretamente";
+      setErrorValidator(message);
+      error=true;    
     }
-    setErrorValidator(message);    
+    return !error;
   }
 
   async function handleSignIn(){
-    validaCampos();
-    if(errorValidator) {
-      return Alert.alert(errorValidator);
+    
+    try {
+      if(!validaCampos()) {
+        return Alert.alert(errorValidator);
+      }
+      // aqui fazer o login com a api
+      const response = await api.get('cinema');
+      const data = response.data as IData[];
+      let text = "";
+       data.forEach((item,index) =>{
+        text= text + index + ": " + item.titulo + "\n";
+      });
+      setMessage(text);
+      return ;
+    } catch (error) {
+      console.log(error);
+      return;
     }
-    // aqui fazer o login com a api
-    const data ={
-      email,
-      password
-    }
-    const response = await api.post('loginsimples',data);
-    const {status} = response.data as IResponse;
-    Alert.alert(status);
-  }
+  } 
 
   return (
-    <KeyboardAvoidingView 
-      style={{ flex: 1 }} 
-      behavior={Platform.OS === "ios" ? "padding" : "height"} 
-      enabled
-    >
+    <Container>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <Container>
-            <StatusBar
-              barStyle="dark-content"
-              backgroundColor="transparent"
-              translucent
-            />
-
-            <Header>
-              <Title>
-                IFPB -
-                Campus Cajazeiras
-              </Title>
-              <SubTitle>
-                Faça seu login para começar{'\n'} 
-                uma experiência incrível.
-              </SubTitle>
-            </Header>
-
-            <Form>
-              <InputCustom 
-                iconName="mail"
-                placeholder="E-mail"
-                keyboardType="email-address"
-                autoCorrect={false}/* não fica corrigindo palavras */
-                autoCapitalize="none" /* não fica induzindo a colocar a primeira letra maiúscula */
-                onChangeText={setEmail}
-                value={email}
+        <KeyboardAvoidingView behavior="position" enabled >
+              <StatusBar
+                barStyle="dark-content"
+                backgroundColor="transparent"
+                translucent
               />
 
-              <InputCustom 
-                iconName="lock"
-                placeholder="Senha"
-                onChangeText={setPassword}
-                value={password}
-              />
-            </Form>
+              <Header>
+                <Title>
+                  IFPB -
+                  Campus Cajazeiras
+                </Title>
+                <SubTitle>
+                  Faça seu login para começar{'\n'} 
+                  uma experiência incrível.
+                </SubTitle>
+              </Header>
 
-            <Footer>
-              <ButtonCustom
-                title="Login"
-                onPress={handleSignIn}
-                loading={false}
-              />
+              <Form>
+                <InputCustom 
+                  iconName="mail"
+                  placeholder="E-mail"
+                  keyboardType="email-address"
+                  autoCorrect={false}/* não fica corrigindo palavras */
+                  autoCapitalize="none" /* não fica induzindo a colocar a primeira letra maiúscula */
+                  onChangeText={setEmail}
+                  value={email}
+                />
 
-              <ButtonCustom
-                title="Criar conta gratuita"
-                color={theme.colors.secondary}
-                onPress={()=>{}}
-                disabled={true}
-                loading={false}
-              />
-            </Footer>
-          </Container>
-        </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+                <InputCustom 
+                  iconName="lock"
+                  placeholder="Senha"
+                  onChangeText={setPassword}
+                  value={password}
+                />
+              </Form>
+
+              <Footer>
+                <ButtonCustom
+                  title="Login"
+                  onPress={handleSignIn}
+                  loading={false}
+                />
+
+                <ButtonCustom
+                  title="Criar conta gratuita"
+                  color={theme.colors.secondary}
+                  onPress={()=>{}}
+                  disabled={true}
+                  loading={false}
+                />
+                {
+                  message.length > 0 && (
+                    <Header>
+                      <SubTitle> {message}</SubTitle>
+                    </Header>
+                  )
+                }
+              </Footer>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </Container>
   );
 }

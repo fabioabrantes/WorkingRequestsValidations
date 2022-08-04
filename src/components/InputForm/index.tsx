@@ -3,8 +3,9 @@ import {InputCustom,Props as InputCustomProps} from '../InputCustom';
 import {Control, Controller,FieldValues} from'react-hook-form';
 import {ErrorInput} from '../ErrorInput';
 
+
 interface Props extends InputCustomProps{
-  control:Control;
+  control:Control<any>;
   name:string;
   error:FieldValues;
 }

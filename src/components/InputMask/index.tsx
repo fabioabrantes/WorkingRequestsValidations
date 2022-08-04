@@ -32,6 +32,7 @@ export function InputMask({iconName, mask,inputMaskChange, ...rest}:Props){
   function handleChange(valor:string){
     if(mask === 'cpf'){
       let value = maskCpf(valor);
+      console.log(value);
       inputMaskChange(value);
     }else if (mask === 'cep'){
       //criar mascara de cep

@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     marginTop:30,
-    
+    backgroundColor:'green'
   },
   containerMask: {
     flexDirection: 'row',

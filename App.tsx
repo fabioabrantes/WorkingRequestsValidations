@@ -7,7 +7,7 @@ import {ValidationLibExterna} from './src/screens/Validations/ValidationLibExter
 import {ValidationReactHookForm} from './src/screens/Validations/ValidationReactHookForm';
 
 
-/* import {Login} from './src/screens/Requisicoes/Login'; */
+import {Login} from './src/screens/Requisicoes/Login';
 
 import {
   useFonts,
@@ -29,9 +29,9 @@ export default function App() {
   return (
     <ThemeProvider theme={THEME}>
       {/* <ValidationManual/> */}
-      {/* <Login /> */}
+      <Login />
       {/* <ValidationLibExterna /> */}
-      <ValidationReactHookForm />
+      {/* <ValidationReactHookForm /> */}
     </ThemeProvider>
   );
 }

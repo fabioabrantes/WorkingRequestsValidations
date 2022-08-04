@@ -7,14 +7,13 @@ import {
   Platform,
 } from 'react-native';
 
-import {useForm, Controller} from'react-hook-form';
+import {useForm} from'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 
 import {ButtonCustom} from '../../../components/ButtonCustom';
 import {InputFormMask} from '../../../components/InputFormMask';
 import {InputForm} from '../../../components/InputForm';
 
-import {InferType} from 'yup';
 import {schemaValidation} from '../../../utils/validationYup';
 
 import { 
@@ -53,75 +52,74 @@ export function ValidationReactHookForm() {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView 
-        style={{ flex: 1 }} 
-        behavior={Platform.OS === "ios" ? "padding" : "height"} 
-        enabled
-      >
-          <Container>
-            <StatusBar
-              barStyle="dark-content"
-              backgroundColor="transparent"
-              translucent
-            />
-
-            <Header>
-              <SubTitle>
-                Faça seu Cadastro no sistema do IFPB.
-              </SubTitle>
-            </Header>
-
-            <Form>
-            <InputForm 
-                iconName="edit"
-                name="nome"
-                control={control}
-                placeholder="Digite seu nome"
-                autoCorrect={false}/* não fica corrigindo palavras */
-                autoCapitalize="none" /* não fica induzindo a colocar a primeira letra maiúscula */
-                error={errors.nome}
+    <Container>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView 
+          behavior="position"
+          enabled
+        >
+              <StatusBar
+                barStyle="dark-content"
+                backgroundColor="transparent"
+                translucent
               />
-              
+
+              <Header>
+                <SubTitle>
+                  Faça seu Cadastro no sistema do IFPB.
+                </SubTitle>
+              </Header>
+
+              <Form>
               <InputForm 
-                iconName="mail"
-                name="email"
-                control={control}
-                placeholder="Digite seu E-mail"
-                keyboardType="email-address"
-                autoCorrect={false}
-                autoCapitalize="none" 
-                error={errors.email}
-              />
+                  iconName="edit"
+                  name="nome"
+                  control={control}
+                  placeholder="Digite seu nome"
+                  autoCorrect={false}/* não fica corrigindo palavras */
+                  autoCapitalize="none" /* não fica induzindo a colocar a primeira letra maiúscula */
+                  error={errors.nome}
+                />
+                
+                <InputForm 
+                  iconName="mail"
+                  name="email"
+                  control={control}
+                  placeholder="Digite seu E-mail"
+                  keyboardType="email-address"
+                  autoCorrect={false}
+                  autoCapitalize="none" 
+                  error={errors.email}
+                />
+                
+                <InputForm 
+                  iconName="lock"
+                  name="senha"
+                  control={control}
+                  placeholder="Digite sua Senha"
+                  error={errors.senha}
+                />
               
-              <InputForm 
-                iconName="lock"
-                name="senha"
+              <InputFormMask
+                iconName='edit'
+                placeholder="Digite seu CPF"
+                type='cpf'
                 control={control}
-                placeholder="Digite sua Senha"
-                error={errors.senha}
+                name="cpf"
+                keyboardType="number-pad"
+                error={errors.cpf}
               />
-             
-             <InputFormMask
-              iconName='edit'
-              placeholder="Digite seu CPF"
-              type='cpf'
-              control={control}
-              name="cpf"
-              keyboardType="number-pad"
-              error={errors.cpf}
-             />
-            </Form>
+              </Form>
 
-            <Footer>
-              <ButtonCustom
-                title="Cadastrar"
-                onPress={handleSubmit(salvar)}
-                loading={false}
-              />
-            </Footer>
-          </Container>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+              <Footer>
+                <ButtonCustom
+                  title="Cadastrar"
+                  onPress={handleSubmit(salvar)}
+                  loading={false}
+                />
+              </Footer>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </Container>
   );
 }
